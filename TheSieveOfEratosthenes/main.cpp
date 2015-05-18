@@ -3,16 +3,15 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "sequencial.h"
+#include "sequential.h"
 #include "parallel.h"
 
-int main(int argc, char const *argv[])
-{
+void execute() {
 	omp_set_dynamic(0);
 	omp_set_num_threads(4);
 
-	ulong * primes_bits; 	// prime, bitmask array
-	uchar * primes_char; 	// prime char array
+	ulong * primes_bits = NULL; 	// prime, bitmask array
+	uchar * primes_char = NULL; 	// prime char array
 
 	ulong
 		limit, 				// upper bound limit
@@ -27,8 +26,11 @@ int main(int argc, char const *argv[])
 	double elapseTime;
 
 	// parse arguments
-	sscanf(argv[1], "%d", &exponent);
-	sscanf(argv[2], "%d", &method);
+	//sscanf(argv[1], "%d", &exponent);
+	//sscanf(argv[2], "%d", &method);
+
+	exponent = 25;
+	method = 0;
 
 	limit = pow((float)2, exponent);
 	sqrtLimit = sqrt((long double)limit);
@@ -53,47 +55,7 @@ int main(int argc, char const *argv[])
 	elapseTime = omp_get_wtime();
 
 	// compute primes
-	switch (method) {
-	case SC_BASIC:
-		SC_Basic(primes_char, limit, sqrtLimit);
-		break;
-	case SC_BASICBITS:
-		SC_BasicBits(primes_bits, limit, sqrtLimit);
-		break;
-	case SC_OPT:
-		SC_Opt(primes_char, limit, sqrtLimit, space);
-		break;
-	case SC_OPTBITS:
-		SC_OptBits(primes_bits, limit, sqrtLimit, space);
-		break;
-	case MC_OMP:
-		openMP(primes_char, limit, sqrtLimit);
-		break;
-	case MC_OMPBITS:
-		openMPBits(primes_bits, limit, sqrtLimit);
-		break;
-	case MC_OMP2:
-		openMP2(primes_char, limit, sqrtLimit);
-		break;
-	case MC_OMP2BITS:
-		openMP2Bits(primes_bits, limit, sqrtLimit);
-		break;
-	case MC_OMPOPT:
-		openMPOpt(primes_char, limit, sqrtLimit, space);
-		break;
-	case MC_OMPOPTBITS:
-		openMPOptBits(primes_bits, limit, sqrtLimit, space);
-		break;
-	case SC_CACHED:
-		SC_Cached(primes_char, limit, sqrtLimit, space);
-		break;
-	case SC_CACHEDBITS:
-		SC_CachedBits(primes_bits, limit, sqrtLimit, space);
-		break;
-	case MC_CACHEDBITS:
-		openMPOptCacheBits(primes_bits, limit, sqrtLimit, space);
-		break;
-	}
+	s_base(primes_char, limit, sqrtLimit);
 
 	//stop clock
 	elapseTime = omp_get_wtime() - elapseTime;
@@ -121,6 +83,18 @@ int main(int argc, char const *argv[])
 	else {
 		free(primes_char);
 	}
+}
+
+void test() {
+
+}
+
+int main(int argc, char const *argv[])
+{
+	execute();
+	test();
+
+	system("PAUSE");
 
 	return 0;
 }
