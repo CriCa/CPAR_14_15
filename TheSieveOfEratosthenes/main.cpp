@@ -34,10 +34,8 @@ int main(int argc, char const *argv[])
 	ofstream file;
 	file.open(PERF_FILENAME);
 
-	int rank, size;
-
 	// loop methods
-	for (int method = 0; method <= MAX_METHOD; method++) {
+	for (int method = 11; method <= MAX_METHOD; method++) {
 
 		// print method
 		cout << "Testing method: ";

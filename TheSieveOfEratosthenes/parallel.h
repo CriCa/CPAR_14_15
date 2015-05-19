@@ -82,7 +82,7 @@ inline void p_odd(long long* primes, long long limit, long long sqrtLimit, long 
 
 inline void p_blocks(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long ind, k, mark, i;
-	long long chunks = 100;
+	long long chunks = CHUNK_SIZE;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh, j;
 
 	//proccess own block
@@ -125,11 +125,11 @@ inline void p_blocks(unsigned char* primes, long long limit, long long sqrtLimit
 
 inline void p_blocks(long long* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long ind, k, mark, i;
-	long long chunks = 100;
+	long long chunks = CHUNK_SIZE;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh, j;
 
 	//proccess own block
-#pragma omp parallel for
+	#pragma omp parallel for
 	for (i = 0; i <= chunks; i++) {
 		chunkLowIndex = i * (size) / (chunks + 1);
 		chunkHighIndex = (i + 1) * (size) / (chunks + 1) - 1;

@@ -1,26 +1,99 @@
-Testing method: 0
+Testing method: 11
 Testing n = 25
 Primes found: 2063689
-Total time: 0.316482 secs
+Total time: 0.184487 secs
 
 Testing n = 26
 Primes found: 3957809
-Total time: 0.652546 secs
+Total time: 0.444178 secs
 
 Testing n = 27
 Primes found: 7603553
-Total time: 1.37603 secs
+Total time: 1.22033 secs
 
 Testing n = 28
 Primes found: 14630843
-Total time: 2.9302 secs
+Total time: 2.82696 secs
 
 Testing n = 29
 Primes found: 28192750
-Total time: 6.21513 secs
+Total time: 6.18332 secs
 
 Testing n = 30
 Primes found: 54400028
-Total time: 13.1683 secs
+Total time: 12.449 secs
 
 Testing n = 31
+Primes found: 105097565
+Total time: 26.1169 secs
+
+Testing n = 32
+Primes found: 203280221
+Total time: 54.575 secs
+
+Testing method: 12
+Testing n = 25
+Primes found: 2063689
+Total time: 0.945373 secs
+
+Testing n = 26
+Primes found: 3957809
+Total time: 1.91636 secs
+
+Testing n = 27
+Primes found: 7603553
+Total time: 4.04666 secs
+
+Testing n = 28
+Primes found: 14630843
+Total time: 8.78487 secs
+
+Testing n = 29
+Primes found: 28192750
+Total time: 18.7064 secs
+
+Testing n = 30
+Primes found: 54400028
+Total time: 38.8597 secs
+
+Testing n = 31
+Primes found: 105097565
+Total time: 82.6623 secs
+
+Testing n = 32
+Primes found: 203280221
+Total time: 181.37 secs
+
+Testing method: 13
+Testing n = 25
+Primes found: 2063689
+Total time: 0.0548063 secs
+
+Testing n = 26
+Primes found: 3957809
+Total time: 0.077548 secs
+
+Testing n = 27
+Primes found: 7603553
+Total time: 0.109361 secs
+
+Testing n = 28
+Primes found: 14630843
+Total time: 0.20128 secs
+
+Testing n = 29
+Primes found: 28192750
+Total time: 0.391919 secs
+
+Testing n = 30
+Primes found: 54400028
+Total time: 0.750972 secs
+
+Testing n = 31
+Primes found: 105097565
+Total time: 1.3182 secs
+
+Testing n = 32
+Primes found: 203280221
+Total time: 2.60863 secs
+

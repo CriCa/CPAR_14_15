@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="parallel.h" />
-    <ClInclude Include="parallel_mpi.h" />
     <ClInclude Include="sequential.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

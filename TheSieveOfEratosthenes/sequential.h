@@ -51,7 +51,7 @@ inline void s_odd(long long* primes, long long limit, long long sqrtLimit, long 
 
 inline void s_blocks(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long ind, k, mark, i;
-	long long chunks = 4098;
+	long long chunks = CHUNK_SIZE;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh, j;
 
 	//proccess own block
@@ -92,7 +92,7 @@ inline void s_blocks(unsigned char* primes, long long limit, long long sqrtLimit
 
 inline void s_blocks(long long* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long ind, k, mark, i;
-	long long chunks = 4098;
+	long long chunks = CHUNK_SIZE;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh, j;
 
 	//proccess own block

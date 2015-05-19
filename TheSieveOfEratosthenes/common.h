@@ -9,11 +9,13 @@ using namespace std;
 // bits in long long
 #define NUM_BITS 64
 
+#define CHUNK_SIZE 4098
+
 // Find array index for Nth bit
-#define INDEX_BIT(N) ((N) / NUM_BITS)
+#define INDEX_BIT(N) (N / NUM_BITS)
 
 // Find position of Nth bit
-#define POS_BIT(N) ((N) % NUM_BITS)
+#define POS_BIT(N) (N % NUM_BITS)
 
 // Set Nth bit
 #define MARK_BIT(barr, N) ((barr)[INDEX_BIT(N)] |= (1i64 << POS_BIT(N)))
