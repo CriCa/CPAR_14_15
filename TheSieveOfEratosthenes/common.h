@@ -9,19 +9,16 @@ using namespace std;
 // bits in long long
 #define NUM_BITS 64
 
-#define SEGMENT_SIZE 220000
-#define TEMP_SIZE 320000
-
-/* Find array index for Nth bit */
+// Find array index for Nth bit
 #define INDEX_BIT(N) ((N) / NUM_BITS)
 
-/* Find position of Nth bit */
+// Find position of Nth bit
 #define POS_BIT(N) ((N) % NUM_BITS)
 
-/* Set Nth bit */
+// Set Nth bit
 #define MARK_BIT(barr, N) ((barr)[INDEX_BIT(N)] |= (1i64 << POS_BIT(N)))
 
-/* Test Nth bit */
+// Test Nth bit
 #define IS_PRIME_BIT(barr, N) ((barr)[INDEX_BIT(N)] & (1i64 << POS_BIT(N)))
 
 #define PRIME 0
@@ -93,17 +90,17 @@ void printMethod(int method) {
 	}
 }
 
-int isBitMethod(int m) {
-	return 	m == SB_FM || m == SB_ODD ||
-		m == SB_BLOCKS || m == PB_INT ||
-		m == PB_EXT || m == PB_ODD ||
-		m == PB_BLOCKS;
+int isBitMethod(int method) {
+	return 	method == SB_FM || method == SB_ODD ||
+		method == SB_BLOCKS || method == PB_INT ||
+		method == PB_EXT || method == PB_ODD ||
+		method == PB_BLOCKS;
 }
 
-int hasEven(int m) {
-	return 	m == S_FM || m == SB_FM ||
-		m == P_INT || m == P_EXT ||
-		m == PB_INT || m == PB_EXT;
+int hasEven(int method) {
+	return 	method == S_FM || method == SB_FM ||
+		method == P_INT || method == P_EXT ||
+		method == PB_INT || method == PB_EXT;
 }
 
 long long countPrimes(long long * primes, int method, long long limit) {

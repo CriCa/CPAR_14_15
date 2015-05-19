@@ -21,7 +21,7 @@ inline void p_internal(long long* primes, long long limit, long long sqrtLimit) 
 
 	for (k = 2; k <= sqrtLimit; k++) {
 		if (!IS_PRIME_BIT(primes, k)) {
-#pragma omp parallel for
+#pragma omp parallel for ordered
 			for (mark = k * k; mark <= limit; mark += k)
 				MARK_BIT(primes, mark);
 		}
@@ -43,8 +43,9 @@ inline void p_external(unsigned char* primes, long long limit, long long sqrtLim
 inline void p_external(long long* primes, long long limit, long long sqrtLimit) {
 	register long long k, mark;
 
-#pragma omp parallel for private(k, mark) schedule(dynamic)
+#pragma omp parallel for private(k, mark) schedule(dynamic) ordered
 	for (k = 2; k <= sqrtLimit; k++) {
+#pragma omp ordered
 		if (!IS_PRIME_BIT(primes, k)) {
 			for (mark = k * k; mark <= limit; mark += k)
 				MARK_BIT(primes, mark);
@@ -71,8 +72,9 @@ inline void p_odd(long long* primes, long long limit, long long sqrtLimit, long 
 	for (i = 0; i <= sqrtLimit; i++) {
 		if (!IS_PRIME_BIT(primes, i)) {
 			k = i * 2 + 3; //semente atual transferido para o número real - 3 + 2*k
-#pragma omp parallel for schedule(dynamic)
+#pragma omp parallel for ordered
 			for (mark = (k * k - 3) / 2; mark <= size; mark += k)
+				#pragma omp ordered
 				MARK_BIT(primes, mark);
 		}
 	}

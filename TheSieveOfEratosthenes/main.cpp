@@ -2,6 +2,7 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <math.h>
+#include <fstream>
 
 #include "sequential.h"
 #include "parallel.h"
@@ -9,6 +10,10 @@
 // defines
 #define EXP_LOWER_LIMIT 25
 #define EXP_UPPER_LIMIT 32
+
+#define PERF_FILENAME "perf.txt"
+
+using namespace std;
 
 int main(int argc, char const *argv[])
 {
@@ -26,6 +31,11 @@ int main(int argc, char const *argv[])
 
 	double elapseTime;
 
+	ofstream file;
+	file.open(PERF_FILENAME);
+
+	int rank, size;
+
 	// loop methods
 	for (int method = 0; method <= MAX_METHOD; method++) {
 
@@ -33,12 +43,14 @@ int main(int argc, char const *argv[])
 		cout << "Testing method: ";
 		printMethod(method);
 		cout << endl;
+		file << "Testing method: " << method << endl;
 
 		// loop exponents
 		for (int exponent = EXP_LOWER_LIMIT; exponent <= EXP_UPPER_LIMIT; exponent++) {
 
 			// print current exponent
 			cout << "Testing n = " << exponent << endl;
+			file << "Testing n = " << exponent << endl;
 
 			limit = (long long)pow(2.0, exponent);
 			sqrtLimit = (long long)sqrt((long double)limit);
@@ -122,6 +134,9 @@ int main(int argc, char const *argv[])
 			//print results
 			cout << "Primes found: " << primeCount << endl
 				<< "Total time: " << elapseTime << " secs" << endl << endl;
+			file << "Primes found: " << primeCount << endl
+				<< "Total time: " << elapseTime << " secs" << endl << endl;
+			file.flush();
 			
 			// free memory
 			if (isBitMethod(method))
@@ -133,6 +148,8 @@ int main(int argc, char const *argv[])
 		// spacing for next method
 		cout << endl;
 	}
+
+	file.close();
 
 	system("PAUSE");
 

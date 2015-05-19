@@ -1,0 +1,26 @@
+Testing method: 0
+Testing n = 25
+Primes found: 2063689
+Total time: 0.316482 secs
+
+Testing n = 26
+Primes found: 3957809
+Total time: 0.652546 secs
+
+Testing n = 27
+Primes found: 7603553
+Total time: 1.37603 secs
+
+Testing n = 28
+Primes found: 14630843
+Total time: 2.9302 secs
+
+Testing n = 29
+Primes found: 28192750
+Total time: 6.21513 secs
+
+Testing n = 30
+Primes found: 54400028
+Total time: 13.1683 secs
+
+Testing n = 31
