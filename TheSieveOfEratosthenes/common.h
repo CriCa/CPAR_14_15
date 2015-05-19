@@ -4,11 +4,10 @@
 #include <stdio.h>
 
 // data types
-typedef unsigned long long llong;
-typedef unsigned long long ulong;
+typedef long long llong;
 typedef unsigned char uchar;
 
-// bits in ulong
+// bits in llong
 #define NUM_BITS 32
 
 #define SEGMENT_SIZE 220000
@@ -21,10 +20,10 @@ typedef unsigned char uchar;
 #define POS_BITS(N) ((N) % NUM_BITS)
 /* Find position of Nth bit */
 
-#define SET_BIT(barr, N) ((barr)[IND_BITS(N)] |= (1 << POS_BITS(N)))
+#define SET_BIT(barr, N) ((barr)[IND_BITS(N)] |= (1i64 << POS_BITS(N)))
 /* Set Nth bit */
 
-#define TST_BIT(barr, N) ((barr)[IND_BITS(N)] & (1 << POS_BITS(N)))
+#define TST_BIT(barr, N) ((barr)[IND_BITS(N)] & (1i64 << POS_BITS(N)))
 /* Test Nth bit */
 
 #define PRIME 0
@@ -60,8 +59,8 @@ int hasEven(int m) {
 		m == MC_OMPBITS || m == MC_OMP2BITS;
 }
 
-ulong countPrimesBits(ulong * primes, int method, ulong limit) {
-	ulong k, count = 0;
+llong countPrimesBits(llong * primes, int method, llong limit) {
+	llong k, count = 0;
 
 	if (!hasEven(method)) {
 		count = 1;
@@ -85,8 +84,8 @@ ulong countPrimesBits(ulong * primes, int method, ulong limit) {
 	return count;
 }
 
-ulong countPrimesChar(uchar * primes, int method, ulong limit) {
-	ulong k, count = 0;
+llong countPrimesChar(uchar * primes, int method, llong limit) {
+	llong k, count = 0;
 
 	if (!hasEven(method)) {
 		count = 1;
