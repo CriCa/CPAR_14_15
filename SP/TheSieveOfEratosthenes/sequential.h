@@ -1,91 +1,60 @@
-#ifndef PARALLEL
-#define PARALLEL
+#ifndef SEQUENTIAL
+#define SEQUENTIAL
 
-#include <omp.h>
 #include "common.h"
 
-// parallel internal loop
-inline void p_internal(unsigned char* primes, long long limit, long long sqrtLimit) {
+// sequential fast marking
+inline void s_fastMarking(unsigned char* primes, long long limit, long long sqrtLimit) {
 	register long long i, j;
 
-	for (i = 2; i <= sqrtLimit; i++)
-		if (primes[i] == PRIME) {
-			#pragma omp parallel for
-			for (j = i * i; j <= limit; j += i)
-				primes[j] = NOTPRIME;
-		}
-}
-
-// parallel internal loop (bit)
-inline void p_internal(long long* primes, long long limit, long long sqrtLimit) {
-	register long long i, j;
-
-	for (i = 2; i <= sqrtLimit; i++)
-		if (!IS_PRIME_BIT(primes, i)) {
-			#pragma omp parallel for ordered
-			for (j = i * i; j <= limit; j += i)
-				MARK_BIT(primes, j);
-		}
-}
-
-// parallel external loop
-inline void p_external(unsigned char* primes, long long limit, long long sqrtLimit) {
-	register long long i, j;
-
-	#pragma omp parallel for private(i, j) schedule(dynamic)
 	for (i = 2; i <= sqrtLimit; i++)
 		if (primes[i] == PRIME)
 			for (j = i * i; j <= limit; j += i)
 				primes[j] = NOTPRIME;
 }
 
-// parallel external loop (bit)
-inline void p_external(long long* primes, long long limit, long long sqrtLimit) {
+// sequential fast marking (bit)
+inline void s_fastMarking(long long* primes, long long limit, long long sqrtLimit) {
 	register long long i, j;
 
-	#pragma omp parallel for private(i, j) schedule(dynamic) ordered
-	for (i = 2; i <= sqrtLimit; i++) {
-		#pragma omp ordered
+	for (i = 2; i <= sqrtLimit; i++)
 		if (!IS_PRIME_BIT(primes, i))
 			for (j = i * i; j <= limit; j += i)
 				MARK_BIT(primes, j);
-	}
 }
 
-// parallel odd numbers only
-inline void p_odd(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
+// sequential odd numbers only
+inline void s_odd(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long i, j, k;
 
 	for (i = 0; i <= sqrtLimit; i++)
 		if (primes[i] == PRIME) {
 			j = i * 2 + 3;
-			#pragma omp parallel for schedule(dynamic)
-			for (k = (j * j - 3) / 2; k <= size; k += j)
+			k = (j * j - 3) / 2;
+			for (; k <= size; k += j)
 				primes[k] = NOTPRIME;
 		}
 }
 
-// parallel odd numbers only (bit)
-inline void p_odd(long long* primes, long long limit, long long sqrtLimit, long long size) {
+// sequential odd numbers only (bit)
+inline void s_odd(long long* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long i, j, k;
 
 	for (i = 0; i <= sqrtLimit; i++)
 		if (!IS_PRIME_BIT(primes, i)) {
 			j = i * 2 + 3;
-			#pragma omp parallel for ordered
-			for (k = (j * j - 3) / 2; k <= size; k += j)
-				#pragma omp ordered
+			k = (j * j - 3) / 2;
+			for (; k <= size; k += j)
 				MARK_BIT(primes, k);
 		}
 }
 
-// parallel reorganized loops
-inline void p_blocks(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
+// sequential reorganized loops
+inline void s_blocks(unsigned char* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long i, j, k, l, index;
-	long long chunks = CHUNK_SIZE;
+	long long chunks = N_CHUNKS;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh;
 
-	#pragma omp parallel for
 	for (i = 0; i <= chunks; i++) {
 		chunkLowIndex = i * (size) / (chunks + 1);
 		chunkHighIndex = (i + 1) * (size) / (chunks + 1) - 1;
@@ -122,13 +91,12 @@ inline void p_blocks(unsigned char* primes, long long limit, long long sqrtLimit
 	}
 }
 
-// parallel reorganized loops (bit)
-inline void p_blocks(long long* primes, long long limit, long long sqrtLimit, long long size) {
+// sequential reorganized loops (bit)
+inline void s_blocks(long long* primes, long long limit, long long sqrtLimit, long long size) {
 	register long long i, j, k, l, index;
-	long long chunks = CHUNK_SIZE;
+	long long chunks = N_CHUNKS;
 	long long chunkLowIndex, chunkHighIndex, chunkLow, chunkHigh;
 
-	#pragma omp parallel for
 	for (i = 0; i <= chunks; i++) {
 		chunkLowIndex = i * (size) / (chunks + 1);
 		chunkHighIndex = (i + 1) * (size) / (chunks + 1) - 1;
@@ -145,7 +113,7 @@ inline void p_blocks(long long* primes, long long limit, long long sqrtLimit, lo
 				k = ((k - 3) >> 1) - ((chunkLow - 3) >> 1);
 			else {
 				k = chunkLow % j;
-				if (k != PRIME) {
+				if (k != 0) {
 					if (j > chunkLow % (j + j)) k = (j - k) >> 1;
 					if (j < chunkLow % (j + j)) k = j - (k >> 1);
 				}
