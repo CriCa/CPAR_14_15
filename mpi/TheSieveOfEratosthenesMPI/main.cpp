@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	for (method = 1; method <= MAX_METHOD; method++) {
+	for (method = 0; method <= MAX_METHOD; method++) {
 		if (rank == MASTER)
 			cout << "Testing method: " << getMethod(method).c_str() << endl;
 

@@ -1,30 +1,10 @@
-Testing method: Parallel Reorganized Loops
+Testing method: Sequential Fast Marking
 Testing n = 25
 Primes found: 2063689
-Average time: 0.0225099 secs
+Average time: 0.39574 secs
 
 Testing n = 26
 Primes found: 3957809
-Average time: 0.0355055 secs
+Average time: 0.844643 secs
 
 Testing n = 27
-Primes found: 7603553
-Average time: 0.040119 secs
-
-Testing n = 28
-Primes found: 14630843
-Average time: 0.107318 secs
-
-Testing n = 29
-Primes found: 28192750
-Average time: 0.187778 secs
-
-Testing n = 30
-Primes found: 54400028
-Average time: 0.401434 secs
-
-Testing n = 31
-Primes found: 105097565
-Average time: 0.986472 secs
-
-Testing n = 32
