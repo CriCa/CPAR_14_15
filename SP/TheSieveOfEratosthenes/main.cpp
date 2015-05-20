@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
 		file << "Testing method: " << getMethod(method).c_str() << endl;
 
 		// loop exponents
-		for (int exponent = EXP_LOWER_LIMIT; exponent <= EXP_LOWER_LIMIT; exponent++) {
+		for (int exponent = EXP_LOWER_LIMIT; exponent <= EXP_UPPER_LIMIT; exponent++) {
 
 			// print current exponent
 			cout << "Testing n = " << exponent << endl;

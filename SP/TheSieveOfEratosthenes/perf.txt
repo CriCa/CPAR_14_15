@@ -1,52 +1,30 @@
-Testing method: Sequential Fast Marking
-Testing n = 25
-Primes found: 2063689
-Average time: 0.295227 secs
-
-Testing method: Sequential Odd Numbers
-Testing n = 25
-Primes found: 2063689
-Average time: 0.125592 secs
-
-Testing method: Sequential Reorganized Loops
-Testing n = 25
-Primes found: 2063689
-Average time: 0.121362 secs
-
-Testing method: Sequential Fast Marking (Bit)
-Testing n = 25
-Primes found: 2063689
-Average time: 0.197495 secs
-
-Testing method: Sequential Odd Numbers (Bit)
-Testing n = 25
-Primes found: 2063689
-Average time: 0.079118 secs
-
-Testing method: Sequential Reorganized Loops (Bit)
-Testing n = 25
-Primes found: 2063689
-Average time: 0.185047 secs
-
-Testing method: Parallel Internal Loop
-Testing n = 25
-Primes found: 2063689
-Average time: 0.213789 secs
-
-Testing method: Parallel External Loop
-Testing n = 25
-Primes found: 2063689
-Average time: 0.181166 secs
-
-Testing method: Parallel Odd Numbers
-Testing n = 25
-Primes found: 2063689
-Average time: 1.04702 secs
-
 Testing method: Parallel Reorganized Loops
 Testing n = 25
 Primes found: 2063689
-Average time: 0.0466029 secs
+Average time: 0.0225099 secs
 
-Testing method: Parallel Internal Loop (Bit)
-Testing n = 25
+Testing n = 26
+Primes found: 3957809
+Average time: 0.0355055 secs
+
+Testing n = 27
+Primes found: 7603553
+Average time: 0.040119 secs
+
+Testing n = 28
+Primes found: 14630843
+Average time: 0.107318 secs
+
+Testing n = 29
+Primes found: 28192750
+Average time: 0.187778 secs
+
+Testing n = 30
+Primes found: 54400028
+Average time: 0.401434 secs
+
+Testing n = 31
+Primes found: 105097565
+Average time: 0.986472 secs
+
+Testing n = 32

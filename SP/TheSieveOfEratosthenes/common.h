@@ -27,7 +27,7 @@ using namespace std;
 #define IS_PRIME_BIT(arr, N) ((arr)[INDEX_BIT(N)] & (1i64 << POS_BIT(N)))
 
 // number of blocks for blocks algorithm
-#define N_CHUNKS 4098
+#define N_CHUNKS 4096
 
 /// Methods
 #define S_FM 0
