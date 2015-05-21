@@ -6,8 +6,9 @@
 #define MPI 0
 #define MPI_SEED 1
 #define MPI_BLOCKS 2
+#define MPI_BLOCKS_P 3
 
-#define MAX_METHOD 2
+#define MAX_METHOD 3
 
 #define EXP_LOWER_LIMIT 25
 #define EXP_UPPER_LIMIT 32
@@ -21,6 +22,8 @@ string getMethod(int method) {
 		return "MPI seed";
 	case MPI_BLOCKS:
 		return "MPI blocks";
+	case MPI_BLOCKS_P:
+		return "MPI blocks shared memory";
 	default:
 		return "ERROR";
 	}
@@ -60,6 +63,9 @@ int main(int argc, char **argv) {
 					break;
 				case MPI_BLOCKS:
 					avgTime += mpi_blocks(rank, size, limit, sqrtLimit);
+					break;
+				case MPI_BLOCKS_P:
+					avgTime += mpi_blocks_p(rank, size, limit, sqrtLimit);
 					break;
 				}
 			}

@@ -324,4 +324,107 @@ double mpi_blocks(int rank, int size, long long limit, long long sqrtLimit) {
 	return maxTime;
 }
 
+double mpi_blocks_p(int rank, int size, long long limit, long long sqrtLimit) {
+	unsigned char *primes, *seeds;
+	long long nOdd, i, k, mark, blockLow, blockHigh, blockSize, ind, realMin;
+	double maxTime;
+
+	nOdd = ((limit - 3) / 2) + 1;
+
+	blockLow = BLOCK_LOW(rank, size, nOdd);
+	blockHigh = BLOCK_HIGH(rank, size, nOdd);
+	blockSize = blockHigh - blockLow + 1;
+
+	primes = (unsigned char*)calloc(blockSize, sizeof(unsigned char));
+	seeds = (unsigned char*)calloc(sqrtLimit + 2, sizeof(unsigned char));
+
+	realMin = blockLow + blockLow + 3;
+
+	long long chunks = N_CHUNCKS;
+	long long chunkLowIndex, chunkHighIndex, chunkSize, chunkLow, chunkHigh, j;
+
+	// start clock
+	double start_time = omp_get_wtime();
+
+	// pre-proccess seeds
+	for (ind = 0; ind + ind + 3 <= sqrtLimit; ind++)
+		if (seeds[ind] == 0) {
+			k = ind + ind + 3;
+			mark = (k * k - 3) / 2;
+
+			for (; mark <= sqrtLimit; mark += k)
+				seeds[mark] = 1;
+		}
+
+	// compute primes
+	#pragma omp parallel for
+	for (i = 0; i <= chunks; i++) {
+		chunkLowIndex = i * (blockSize) / (chunks + 1);
+		chunkHighIndex = (i + 1) * (blockSize) / (chunks + 1) - 1;
+		chunkSize = (chunkHighIndex - chunkLowIndex) + 1;
+		chunkLow = chunkLowIndex + chunkLowIndex + blockLow + blockLow + 3;
+		chunkHigh = chunkHighIndex + chunkHighIndex + blockLow + blockLow + 3;
+
+		ind = 0;
+
+		do {
+			k = ind + ind + 3;
+			mark = k * k;
+
+
+			if (mark > chunkLow)
+				mark = ((mark - 3) >> 1) - ((chunkLow - 3) >> 1);
+			else {
+				mark = chunkLow % k;
+				if (mark != 0) {
+					if (k > chunkLow % (k + k)) mark = (k - mark) >> 1;
+					if (k < chunkLow % (k + k)) mark = k - (mark >> 1);
+				}
+			}
+
+			mark += chunkLowIndex;
+
+			for (j = mark; j <= chunkHighIndex; j += k)
+				primes[j] = 1;
+
+			while (seeds[++ind]);
+		} while (k * k <= chunkHigh);
+	}
+
+	// stop clock
+	double time = omp_get_wtime() - start_time;
+
+	if (rank == MASTER) {
+		maxTime = time;
+		long long count = 1, servantCount;
+		int servant;
+
+		count += countPrimes_seed(primes, blockHigh);
+
+		for (servant = 1; servant < size; servant++) {
+			MPI_Recv(&servantCount, 1, MPI_LONG_LONG, servant, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			count += servantCount;
+		}
+
+		for (rank = 1; rank < size; rank++) {
+			MPI_Recv(&time, 1, MPI_DOUBLE, rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+			maxTime = fmax(maxTime, time);
+		}
+
+		// print results
+		cout << "Primes Found: " << count << endl
+			<< "Exec time: " << maxTime << " secs" << endl;
+	}
+	else {
+		long long count = countPrimes_seed(primes, blockLow, blockHigh);
+		MPI_Send(&count, 1, MPI_LONG_LONG, 0, 0, MPI_COMM_WORLD);
+
+		MPI_Send(&time, 1, MPI_DOUBLE, 0, 0, MPI_COMM_WORLD);
+	}
+
+	free(primes);
+
+	return maxTime;
+}
+
 #endif
